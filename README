@@ -1,0 +1,15 @@
+ActsAsExtjs
+===========
+
+ActiveRecord Helper for Extjs
+
+
+Example
+=======
+
+class Model < ActiveRecord::Base
+  acts_as_extjs
+end
+
+
+Copyright (c) 2010 Marco Scholl, released under the MIT license
