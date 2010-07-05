@@ -65,7 +65,7 @@ module Extjs #:nodoc:
         result.each do |result_row|
           row = {}
           fields.collect do |field|
-            if field[:convert].is_a? Proc
+            if field[:custom].is_a? Proc
               row[field[:name]] = field[:convert].call(result_row)
             else
               row[field[:name]] = result_row.send(field[:name])
