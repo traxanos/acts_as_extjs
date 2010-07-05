@@ -61,14 +61,17 @@ module Extjs #:nodoc:
           total = result.size
         end
         
-        field_names = fields.collect { |field| field[:name] }
         rows = []
         result.each do |result_row|
           row = {}
-          field_names.each do |field|
-            row[field] = result_row.send(field)
-            if row[field].is_a? ActiveSupport::TimeWithZone or row[field].is_a? DateTime or row[field].is_a? Time
-              row[field] = row[field].strftime("%Y-%m-%d %H:%M:%S")
+          fields.collect do |field|
+            if field[:convert].is_a? Proc
+              row[field[:name]] = field[:convert].call(result_row)
+            else
+              row[field[:name]] = result_row.send(field[:name])
+            end
+            if row[field].is_a? ActiveSupport::TimeWithZone or row[field[:name]].is_a? DateTime or row[field[:name]].is_a? Time
+              row[field[:name]] = row[field[:name]].strftime("%Y-%m-%d %H:%M:%S")
             end
           end
           rows << row
