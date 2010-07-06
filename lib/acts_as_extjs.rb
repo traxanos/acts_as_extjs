@@ -109,7 +109,6 @@ module Extjs #:nodoc:
       def extjs_errors
         hash = {}
         self.errors.each do |error|
-          logger.debug error.inspect
           if error.last.at(0) == '^'
             message = error.last.slice(1..-1)
           else
@@ -117,7 +116,6 @@ module Extjs #:nodoc:
           end
           hash["data[#{error.first}]"] = message
         end
-        Rails.logger.info(hash.inspect)
         return hash
       end
     end
