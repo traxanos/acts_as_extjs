@@ -4,14 +4,11 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{acts_as_extjs}
+  s.name = nil
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Marco Scholl"]
   s.date = %q{2010-07-23}
-  s.description = %q{ActiveRecord Helper for Extjs}
-  s.email = %q{develop@marco-scholl.de}
   s.extra_rdoc_files = [
     "README"
   ]
@@ -22,16 +19,20 @@ Gem::Specification.new do |s|
      "VERSION",
      "acts_as_extjs.gemspec",
      "init.rb",
-     "lib/acts_as_extjs.rb"
+     "install.rb",
+     "lib/acts_as_extjs.rb",
+     "lib/tasks/acts_as_extjs.rake",
+     "test/acts_as_extjs_test.rb",
+     "test/test_helper.rb",
+     "uninstall.rb"
   ]
-  s.homepage = %q{http://github.com/traxanos/acts_as_extjs}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{ActiveRecord Helper for Extjs}
+  s.summary = nil
   s.test_files = [
-    "spec/acts_as_extjs_spec.rb",
-     "spec/spec_helper.rb"
+    "test/acts_as_extjs_test.rb",
+     "test/test_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -39,12 +40,9 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
-      s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
-    s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
 end
 
