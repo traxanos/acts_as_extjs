@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'active_record'
+
 module Extjs #:nodoc:
   module ActsAsExtjs #:nodoc:
 
@@ -123,3 +126,5 @@ module Extjs #:nodoc:
     end
   end
 end
+
+ActiveRecord::Base.send(:include, Extjs::ActsAsExtjs)
