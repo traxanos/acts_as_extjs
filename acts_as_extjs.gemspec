@@ -16,13 +16,18 @@ Gem::Specification.new do |s|
     "README"
   ]
   s.files = [
-    "MIT-LICENSE",
+    ".gemspec",
+     ".gitignore",
+     "MIT-LICENSE",
      "README",
      "Rakefile",
      "VERSION",
      "acts_as_extjs.gemspec",
      "init.rb",
-     "lib/acts_as_extjs.rb"
+     "lib/acts_as_extjs.rb",
+     "spec/acts_as_extjs_spec.rb",
+     "spec/spec.opts",
+     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/traxanos/acts_as_extjs}
   s.rdoc_options = ["--charset=UTF-8"]
