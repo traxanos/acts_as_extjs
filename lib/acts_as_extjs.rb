@@ -20,7 +20,11 @@ module Extjs #:nodoc:
       # 
       def acts_as_extjs
         # empty named sop
-        named_scope :extjs
+        if Rails.version.at(0).to_i >= 3
+          scope :extjs
+        else
+          named_scope :extjs
+        end
         include Extjs::ActsAsExtjs::InstanceMethods
         extend Extjs::ActsAsExtjs::SingletonMethods
       end
