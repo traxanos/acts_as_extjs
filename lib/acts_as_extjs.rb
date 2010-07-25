@@ -9,7 +9,17 @@ module Extjs #:nodoc:
     end
 
     module ClassMethods
+      # activate gem on ar-model with acts_as_extjs
+      #
+      # -----
+      # 
+      # === Example:
+      #   class User
+      #     acts_as_extjs
+      #   end
+      # 
       def acts_as_extjs
+        # empty named sop
         named_scope :extjs
         include Extjs::ActsAsExtjs::InstanceMethods
         extend Extjs::ActsAsExtjs::SingletonMethods
@@ -17,6 +27,34 @@ module Extjs #:nodoc:
     end
 
     module SingletonMethods
+      # search on a model. the result is a hash that can use as json for extjs store
+      #
+      # +args+:: all options that you will use on active record finder with following extras
+      #
+      # -----
+      #
+      # === Options:
+      # <tt>:fields</tt>::       List with hashes like extjs store fields.
+      #                          <tt>:name</tt>::          Name off field. This will be call on row if not use an custom handler
+      #                          <tt>:custom</tt>::        can use with Proc.new for own field content
+      #                          <tt>:mapping</tt>::       Client side mapping by extjs store
+      # <tt>:sort_mapping</tt>:: A Hash to map columns
+      #                          :fieldname => "sqlfiels"
+      #                          :user_name => "users.name"
+      # <tt>:start</tt>::        start value from extjs paginate toolbar
+      # <tt>:limit</tt>::        limit value from extjs paginate toolbar
+      # <tt>:page</tt>::         page - will overritten if start/limit set
+      # <tt>:per_page</tt>::     per_page - will overritten if start/limit set
+      # <tt>:sort_by</tt>::      sort field. ignore fields that are not in sort_mapping and use this mapping
+      # <tt>:group_by</tt>::     group field. ignore fields that are not in sort_mapping and use this mapping
+      # <tt>:sort_dir</tt>::     direction: asc | desc
+      # <tt>:group_dir</tt>::    direction: asc | desc
+      # 
+      # -----
+      # 
+      # === Example:
+      #   render :json => User.extjs_result :fields = [{:name => :superid, :type => :id, :custom => Proc.new { |row| row.id }}]
+      #
       def extjs_result(*args)
         options = args.extract_options!
         fields = options.delete(:fields)
@@ -40,7 +78,6 @@ module Extjs #:nodoc:
           else
             order = 'created_at DESC'
           end
-
 
           if not group_by.blank? and sort_mapping.has_key?(group_by.to_sym)
             if group_dir.to_s.downcase == "desc"
