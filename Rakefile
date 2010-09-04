@@ -11,9 +11,8 @@ begin
     gem.homepage = "http://github.com/traxanos/acts_as_extjs"
     gem.authors = ["Marco Scholl"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.add_development_dependency "activerecord", ">= 2.3.8"
-    gem.add_development_dependency "will_paginate"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_runtime_dependency "activerecord", ">= 2.3.8"
+    gem.add_runtime_dependency "will_paginate"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

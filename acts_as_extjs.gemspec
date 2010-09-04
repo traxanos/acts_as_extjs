@@ -9,17 +9,16 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marco Scholl"]
-  s.date = %q{2010-07-25}
+  s.date = %q{2010-09-04}
   s.description = %q{ActiveRecord Helper for Extjs}
   s.email = %q{develop@marco-scholl.de}
   s.extra_rdoc_files = [
-    "README"
+    "README.rdoc"
   ]
   s.files = [
     ".gemspec",
      ".gitignore",
      "MIT-LICENSE",
-     "README",
      "Rakefile",
      "VERSION",
      "acts_as_extjs.gemspec",
@@ -44,8 +43,8 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_development_dependency(%q<activerecord>, [">= 2.3.8"])
-      s.add_development_dependency(%q<will_paginate>, [">= 0"])
+      s.add_runtime_dependency(%q<activerecord>, [">= 2.3.8"])
+      s.add_runtime_dependency(%q<will_paginate>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
       s.add_dependency(%q<activerecord>, [">= 2.3.8"])

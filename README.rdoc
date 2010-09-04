@@ -1,0 +1,18 @@
+== ActsAsExtjs
+
+ActiveRecord Helper for Extjs
+
+
+== Integration
+
+class Model < ActiveRecord::Base
+  acts_as_extjs
+end
+
+== Maintainers
+
+* Marco Scholl (http://github.com/traxanos)
+
+== License
+
+Copyright (c) 2010 Marco Scholl, released under the MIT license
