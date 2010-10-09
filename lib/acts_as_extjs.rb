@@ -78,7 +78,7 @@ module Extjs #:nodoc:
             else
               sort_dir = " ASC"
             end
-            order = sort_mapping[sort_by.to_sym] + sort_dir
+            order = sort_mapping[sort_by.to_sym].to_s + sort_dir
           else
             order = 'created_at DESC'
           end
@@ -89,7 +89,7 @@ module Extjs #:nodoc:
             else
               group_dir = " ASC"
             end
-            order = sort_mapping[group_by.to_sym] + group_dir + ', ' + order
+            order = sort_mapping[group_by.to_sym].to_s + group_dir + ', ' + order
           end
 
           options[:order] = order if order
