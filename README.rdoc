@@ -1,7 +1,16 @@
 == ActsAsExtjs
 
-ActiveRecord Helper for Extjs
+ActiveRecord Store - Helper for Extjs
 
+== Dependecy
+
+* Rails 3
+
+== Installtion
+
+Insert into Gemfile
+
+  gem 'acts_as_extjs'
 
 == Integration
 

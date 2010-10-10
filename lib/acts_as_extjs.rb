@@ -19,13 +19,9 @@ module Extjs #:nodoc:
       #   end
       # 
       def acts_as_extjs
-        # empty named sop
-        if Rails.version.at(0).to_i >= 3
-          scope :extjs
-        else
-          named_scope :extjs
-        end
-        include Extjs::ActsAsExtjs::InstanceMethods
+        scope :extjs
+        
+	include Extjs::ActsAsExtjs::InstanceMethods
         extend Extjs::ActsAsExtjs::SingletonMethods
       end
     end
@@ -154,13 +150,14 @@ module Extjs #:nodoc:
 
       def extjs_errors
         hash = {}
-        self.errors.each do |error|
-          if error.last.at(0) == '^'
-            message = error.last.slice(1..-1)
+        self.errors.each_pair do |field, error|
+          error = error.first
+          if error.at(0) == '^'
+            message = error.slice(1..-1)
           else
-            message = "#{self.class.human_attribute_name(error.first)} #{error.last}"
+            message = "#{self.class.human_attribute_name(field)} #{error}"
           end
-          hash["data[#{error.first}]"] = message
+          hash["#{self.class.name.downcase}[#{field}]"] = message
         end
         return hash
       end
