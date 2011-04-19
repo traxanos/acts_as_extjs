@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'active_record'
-
 module Extjs #:nodoc:
   module ActsAsExtjs #:nodoc:
 
@@ -12,16 +9,16 @@ module Extjs #:nodoc:
       # activate gem on ar-model with acts_as_extjs
       #
       # -----
-      # 
+      #
       # === Example:
-      #   class User
-      #     acts_as_extjs
-      #   end
-      # 
+      # class User
+      # acts_as_extjs
+      # end
+      #
       def acts_as_extjs
         scope :extjs
-        
-	include Extjs::ActsAsExtjs::InstanceMethods
+
+        include Extjs::ActsAsExtjs::InstanceMethods
         extend Extjs::ActsAsExtjs::SingletonMethods
       end
     end
@@ -34,28 +31,31 @@ module Extjs #:nodoc:
       # -----
       #
       # === Options:
-      # <tt>:fields</tt>::       List with hashes like extjs store fields.
-      #                          <tt>:name</tt>::          Name off field. This will be call on row if not use an custom handler
-      #                          <tt>:custom</tt>::        can use with Proc.new for own field content
-      #                          <tt>:mapping</tt>::       Client side mapping by extjs store
+      # <tt>:fields</tt>:: List with hashes like extjs store fields.
+      # <tt>:name</tt>:: Name off field. This will be call on row if not use an custom handler
+      # <tt>:custom</tt>:: can use with Proc.new for own field content
+      # <tt>:mapping</tt>:: Client side mapping by extjs store
       # <tt>:sort_mapping</tt>:: A Hash to map columns
-      #                          :fieldname => "sqlfiels"
-      #                          :user_name => "users.name"
-      # <tt>:start</tt>::        start value from extjs paginate toolbar
-      # <tt>:limit</tt>::        limit value from extjs paginate toolbar
-      # <tt>:page</tt>::         page - will overritten if start/limit set
-      # <tt>:per_page</tt>::     per_page - will overritten if start/limit set
-      # <tt>:sort_by</tt>::      sort field. ignore fields that are not in sort_mapping and use this mapping
-      # <tt>:group_by</tt>::     group field. ignore fields that are not in sort_mapping and use this mapping
-      # <tt>:sort_dir</tt>::     direction: asc | desc
-      # <tt>:group_dir</tt>::    direction: asc | desc
-      # 
+      # :fieldname => "sqlfiels"
+      # :user_name => "users.name"
+      # <tt>:start</tt>:: start value from extjs paginate toolbar
+      # <tt>:limit</tt>:: limit value from extjs paginate toolbar
+      # <tt>:page</tt>:: page - will overritten if start/limit set
+      # <tt>:per_page</tt>:: per_page - will overritten if start/limit set
+      # <tt>:sort_by</tt>:: sort field. ignore fields that are not in sort_mapping and use this mapping
+      # <tt>:group_by</tt>:: group field. ignore fields that are not in sort_mapping and use this mapping
+      # <tt>:sort_dir</tt>:: direction: asc | desc
+      # <tt>:group_dir</tt>:: direction: asc | desc
+      #
       # -----
-      # 
+      #
       # === Example:
-      #   render :json => User.extjs_result :fields = [{:name => :superid, :type => :id, :custom => Proc.new { |row| row.id }}]
+      # render :json => User.extjs_result :fields = [{:name => :superid, :type => :id, :custom => Proc.new { |row| row.id }}]
       #
       def extjs_result(*args)
+        extjs_scope = self.extjs
+
+
         options = args.extract_options!
         fields = options.delete(:fields)
         start = options.delete(:start).to_i
@@ -88,16 +88,17 @@ module Extjs #:nodoc:
             order = sort_mapping[group_by.to_sym].to_s + group_dir + ', ' + order
           end
 
-          options[:order] = order if order
+          extjs_scope = extjs_scope.order(order) if order
         end
+
 
         if limit.to_i > 0 or options[:per_page].to_i > 0
           options[:per_page] = limit if limit > 0
           options[:page] = (start > 0) ? (start/limit)+1 : 1
-          result = self.extjs.paginate options
-          total = result.total_entries
+          result = extjs_scope.paginate options
+          total = result.total
         else
-          result = self.extjs.all options
+          result = extjs_scope.all options
           total = result.size
         end
 
@@ -119,17 +120,17 @@ module Extjs #:nodoc:
           rows << row
         end
 
-        return {
-                :total => total,
-                :data => rows,
-                :metaData => {
-                        :root => :data,
-                        :messageProperty => 'message',
-                        :successProperty => 'success',
-                        :fields => fields,
-                        :idProperty => :id,
-                        :totalProperty => :total,
-                        }
+        {
+          :total => total,
+          :data => rows,
+          :metaData => {
+            :root => :data,
+            :messageProperty => 'message',
+            :successProperty => 'success',
+            :fields => fields,
+            :idProperty => :id,
+            :totalProperty => :total,
+          }
         }
       end
     end
@@ -159,10 +160,9 @@ module Extjs #:nodoc:
           end
           hash["#{self.class.name.downcase}[#{field}]"] = message
         end
-        return hash
+        hash
       end
     end
   end
 end
-
 ActiveRecord::Base.send(:include, Extjs::ActsAsExtjs)

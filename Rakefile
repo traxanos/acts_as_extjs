@@ -12,7 +12,7 @@ begin
     gem.authors = ["Marco Scholl"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_runtime_dependency "activerecord", ">= 3.0.0"
-    gem.add_runtime_dependency "will_paginate", "~> 3.0.pre2"
+    gem.add_runtime_dependency "rails_paginate", ">= 0.0.0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
